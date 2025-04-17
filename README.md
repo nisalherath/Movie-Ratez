@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PALXIWatch - Movie & TV Show Discovery App
+
+A modern web application built with Next.js, React, and TypeScript for browsing popular movies and TV shows using the TMDB API.
+
+## Features
+
+- Browse popular/trending movies
+- Discover top-rated movies
+- Explore popular/trending TV shows
+- Find top-rated TV shows
+- Search for movies and TV shows
+- Responsive design for all screen sizes
+
+## Tech Stack
+
+- **Frontend Framework**: React 18
+- **Meta Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: CSS Modules
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18.x or later
+- npm or yarn
+- TMDB API key (get one from [themoviedb.org](https://www.themoviedb.org/documentation/api))
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/palxi-watch.git
+   cd palxi-watch
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Create a `.env.local` file in the project root and add your TMDB API key:
+   ```
+   NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key_here
+   NEXT_PUBLIC_TMDB_BASE_URL=https://api.themoviedb.org/3
+   NEXT_PUBLIC_TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
+   ```
+
+### Development
+
+Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build the application for production:
+```bash
+npm run build
+# or
+yarn build
+```
 
-## Learn More
+Start the production server:
+```bash
+npm start
+# or
+yarn start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+palxi-watch/
+├── public/
+│   └── images/
+├── src/
+│   ├── app/
+│   │   ├── movies/
+│   │   │   ├── popular/
+│   │   │   └── top-rated/
+│   │   ├── tv/
+│   │   │   ├── popular/
+│   │   │   └── top-rated/
+│   │   ├── search/
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── HeroSection/
+│   │   ├── MovieCard/
+│   │   ├── MovieGrid/
+│   │   └── Navbar/
+│   ├── services/
+│   │   └── tmdb.ts
+│   ├── styles/
+│   │   ├── globals.css
+│   │   └── variables.css
+│   └── types/
+│       └── types.ts
+├── .env.local
+├── package.json
+└── README.md
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Pages
 
-## Deploy on Vercel
+- **Home (/)**: Landing page with trending movies and shows
+- **Movies**
+  - **/movies/popular**: Popular and trending movies
+  - **/movies/top-rated**: Top-rated movies
+- **TV Shows**
+  - **/tv/popular**: Popular and trending TV shows
+  - **/tv/top-rated**: Top-rated TV shows
+- **Search (/search)**: Search results for movies and TV shows
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Integration
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project uses the TMDB API for fetching movie and TV show data. The API service functions are located in `src/services/tmdb.ts`.
+
+## Deployment
+
+This is a Next.js application that can be deployed to various platforms:
+
+- **Vercel** (recommended): Simply connect your GitHub repository to Vercel and deploy.
+- **Netlify**: Can also be deployed to Netlify with minimal configuration.
+- **Self-hosted**: Build the application and serve the output from the `.next` directory.
+
+## License
+
+This project is for educational purposes and is not affiliated with TMDB.
+
+## Acknowledgements
+
+- [The Movie Database (TMDB)](https://www.themoviedb.org/) for providing the API
+- [Next.js](https://nextjs.org/) for the framework
+- [React](https://reactjs.org/) for the UI library
+
+---
+
+This project was created as part of a coding exercise for Palxi.

@@ -1,0 +1,218 @@
+.hero {
+  margin-top: 60px;
+  position: relative;
+  height: 70vh;
+  min-height: 400px;
+  max-height: 800px;
+  width: 100%;
+  color: white;
+  overflow: hidden;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.backdropImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(5, 66, 68, 0.9) 0%,
+    rgba(5, 66, 68, 0.5) 30%,
+    rgba(5, 66, 68, 0.2) 60%,
+    rgba(5, 66, 68, 0.1) 100%
+  );
+}
+
+.content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  z-index: 10;
+}
+
+.contentInner {
+  position: absolute;
+  bottom: 5vw;
+  left: 5vw;
+  max-width: 600px;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+.info {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  flex-wrap: wrap;
+}
+
+.rating {
+  color: rgb(255, 245, 116);
+  font-weight: 600;
+}
+
+.type {
+  text-transform: uppercase;
+  color: rgb(20, 255, 236);
+  font-weight: 600;
+}
+
+.year {
+  color: rgb(255, 131, 131);
+}
+
+.overview {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  line-height: 1.6;
+  max-width: 90%;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgb(20, 255, 236); /* Use your accent color */
+  color: rgb(50, 50, 50);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: rgb(13, 115, 119); /* Darker accent color */
+  transform: translateY(-2px);
+  color: rgb(255, 255, 255);
+  box-shadow: 0 4px 12px rgba(9, 48, 58, 0.3);
+}
+
+.indicators {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.75rem;
+  z-index: 20;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 4px;
+}
+
+.indicatorActive {
+  background-color: white;
+  transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero {
+    height: 60vh;
+    min-height: 350px;
+  }
+  .hero {
+    margin-top: 30px;
+  }
+
+  .content {
+    padding: 0 1.5rem;
+  }
+
+  .overlay {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.7) 40%,
+      rgba(0, 0, 0, 0.4) 70%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
+
+  .contentInner {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 80vh;
+    min-height: 300px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .info {
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .overview {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero {
+    margin-top: 30px;
+  }
+}

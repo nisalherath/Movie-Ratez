@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Add new overlay style for mobile menu background */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.navbar {
+  background-color: rgb(33, 33, 33);
+  position: sticky;
+  top: 30px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-width: fit-content;
+  min-width: 60vw;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 100vh;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar.scrolled {
+  background-color: rgb(50, 50, 50);
+  backdrop-filter: blur(10px);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgb(20, 255, 236);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  min-width: fit-content;
+  margin-right: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo span {
+  color: rgb(13, 115, 119);
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropbtn {
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropbtn::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(13, 115, 119);
+  transition: width 0.3s ease;
+}
+
+.dropdown:hover .dropbtn::after {
+  width: 100%;
+}
+
+.dropdownContent {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  background-color: #1c1c1c;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  z-index: 1;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdown:hover .dropdownContent {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdownContent a {
+  color: #e0e0e0;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  display: block;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownContent a:hover {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.rightActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1fr;
+  font-family: 'Poppins', sans-serif;
+}
+
+.searchInput {
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 100vh;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  min-width: 200px;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.searchInput:focus {
+  outline: none;
+  background-color: #333;
+  border-color: #444;
+}
+
+.searchButton {
+  background-color: rgb(20, 255, 236);
+  border: none;
+  border-radius: 100vh;
+  color: rgb(0, 0, 0);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.searchButton:hover {
+  background-color: rgb(13, 115, 119);
+}
+
+.closeSearchButton {
+  background-color: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+/* Mobile navigation */
+.mobileMenuBtn,
+.mobileSearchBtn {
+  background: none;
+  border: none;
+  color: rgb(20, 255, 236);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    top: 20px;
+    max-width: 80vw;
+  }
+  .container {
+    height: 60px;
+  }
+  
+  .navLinks {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background-color: #141414;
+    flex-direction: column;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    max-width: 70vw;
+    margin: 0 auto;
+    border-radius: 25px;
+    
+    /* Improved mobile menu handling - fix position */
+    bottom: auto;  /* Remove any bottom constraint */
+    z-index: 1001; /* Above the overlay */
+  }
+  
+  .navLinks.open {
+    max-height: 300px;
+    border-top: 1px solid #333;
+    overflow-y: auto; /* Allow scrolling within menu if needed */
+    max-height: 70vh; /* Limit height to prevent full screen coverage */
+  }
+  
+  .dropdown {
+    width: 100%;
+    border-bottom: 1px solid #333;
+  }
+  
+  .dropbtn {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+  
+  .dropdownContent {
+    position: static;
+    box-shadow: none;
+    background-color: #1a1a1a;
+    padding: 0;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .dropdown.active .dropdownContent {
+    max-height: 200px;
+  }
+  
+  .rightActions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  
+  .searchForm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #141414;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 5;
+    border-radius: 100vh;
+  }
+  
+  .searchForm.searchOpen {
+    display: flex;
+  }
+  
+  .searchInput {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+  }
+  
+  .searchButton {
+    padding: 0.5rem;
+  }
+  
+  .searchButtonText {
+    display: none;
+  }
+  
+  .mobileMenuBtn,
+  .mobileSearchBtn {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    top: 20px;
+    max-width: 80vw;
+  }
+  .container {
+    height: 60px;
+  }
+  
+  .navLinks {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background-color: #141414;
+    flex-direction: column;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    max-width: 70vw;
+    margin: 0 auto;
+    border-radius: 25px;
+    
+    /* Match mobile improvements */
+    bottom: auto;
+    z-index: 1001;
+  }
+  
+  .navLinks.open {
+    max-height: 300px;
+    border-top: 1px solid #333;
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+  
+  .dropdown {
+    width: 100%;
+    border-bottom: 1px solid #333;
+  }
+  
+  .dropbtn {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    justify-content: space-between;
+  }
+  
+  .dropdownContent {
+    position: static;
+    box-shadow: none;
+    background-color: #1a1a1a;
+    padding: 0;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .dropdown.active .dropdownContent {
+    max-height: 200px;
+  }
+  
+  .rightActions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  
+  .searchForm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #141414;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    z-index: 5;
+    border-radius: 100vh;
+  }
+  
+  .searchForm.searchOpen {
+    display: flex;
+  }
+  
+  .searchInput {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+  }
+  
+  .searchButton {
+    padding: 0.5rem;
+  }
+  
+  .searchButtonText {
+    display: none;
+  }
+  
+  .mobileMenuBtn,
+  .mobileSearchBtn {
+    display: flex;
+  }
+}
