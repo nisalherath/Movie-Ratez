@@ -8,6 +8,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Next.js](https://img.shields.io/badge/Next.js-13.5-blue)
 ![React](https://img.shields.io/badge/React-18.2-blue)
+![Made with TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?logo=typescript)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+
 #### `A modern movie database application built with Next.js and TypeScript, powered by TMDB API.`
 
   <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
@@ -32,12 +35,12 @@
 ***
 
 
-### - [Project Overview](#project-overview-%EF%B8%8F)
-### - [User Interface](#%EF%B8%8F-user-interface-%EF%B8%8F)
-### - [Dependencies](#dependencies-%EF%B8%8F)
-### - [How To Run](#how-to-run-this-project-%EF%B8%8F)
-### - [File Structure](#file-structure-%EF%B8%8F)
-### - [License](#license-)
+### - [🍿 Project Overview](#project-overview-%EF%B8%8F)
+### - [🍿 User Interface](#%EF%B8%8F-user-interface-%EF%B8%8F)
+### - [🍿 Dependencies](#dependencies-%EF%B8%8F)
+### - [🍿 How To Run](#how-to-run-this-project-%EF%B8%8F)
+### - [🍿 File Structure](#file-structure-%EF%B8%8F)
+### - [🍿 License](#license-)
 
 
 ***
@@ -45,14 +48,6 @@
 
 
 # Project Overview 📽️
-
-### `A Modern Movie Discovery Platform made with Nextjs, TypeScript & React`
-
-1. **Trending Movies** 🚀
-2. **Top Rated Films** 🌟
-3. **TV Show Rankings** 📺
-4. **Search Movies / TV Shows** 🔍
-5. **Interactive UI** 🎨
 
 ## `Some early, Low-Fidelity Prototypes`
 ## `1. HomePage 📽️`
