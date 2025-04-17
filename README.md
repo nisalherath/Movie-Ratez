@@ -91,7 +91,7 @@
 
 <div align="center">
   <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
-    <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744916157/demo_dyjjke.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
+    <img src="./public/demo1.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
 
@@ -104,7 +104,7 @@
 
 <div align="center">
   <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
-    <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744917773/demo2_mmkss0.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
+    <img src="./public/demo2.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
 
@@ -118,7 +118,7 @@
 
 <div align="center">
   <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
-    <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744918586/demo_3_afokos.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
+    <img src="./public/demo3.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
 
@@ -133,7 +133,7 @@
 
 <div align="center">
   <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
-    <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744919514/demo_4_acoumf.gif" width="250" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+    <img src="./public/demo4.gif" width="250" style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
 
