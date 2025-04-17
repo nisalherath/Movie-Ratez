@@ -1,99 +1,87 @@
-import { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
-import { getImageUrl, isMovie } from '@/services/tmdb';
 import { MediaItem } from '@/types/types';
 import styles from './MovieCarouselCard.module.css';
 
 interface MovieCarouselCardProps {
   item: MediaItem;
+  onClick?: (item: MediaItem) => void;
 }
 
-const MovieCarouselCard = ({ item }: MovieCarouselCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const isMovieItem = isMovie(item);
-  const title = isMovieItem ? item.title : item.name;
-  const posterPath = getImageUrl(item.poster_path);
-  const mediaType = item.media_type || (isMovieItem ? 'movie' : 'tv');
+// Helper functions to safely get title and date
+// I ran into a problem where the Movie Type and the TV type would get mumbo Jumbod
+const getTitle = (item: MediaItem): string => {
+  return item.media_type === 'tv' ? item.name! : item.title || '';
+};
+
+const getReleaseDate = (item: MediaItem): string => {
+  return item.media_type === 'tv' ? item.first_air_date! : item.release_date || '';
+};
+
+const getRatingClass = (rating: number): string => {
+  if (rating >= 7.5) return styles.ratingHigh;
+  if (rating >= 6) return styles.ratingMedium;
+  return styles.ratingLow;
+};
+
+const isNewRelease = (dateString: string): boolean => {
+  if (!dateString) return false;
+  const releaseDate = new Date(dateString);
+  const now = new Date();
+  // released in the last 30 days
+  return (now.getTime() - releaseDate.getTime()) < (30 * 24 * 60 * 60 * 1000);
+};
+
+const formatGenres = (genreIds: number[]): string => {
+  // You would implement genre mapping logic here
+  // For now returning placeholder
+  return genreIds.slice(0, 3).join(', ');
+};
+
+const MovieCarouselCard: React.FC<MovieCarouselCardProps> = ({ item, onClick }) => {
+  const title = getTitle(item);
+  const releaseDate = getReleaseDate(item);
+  const year = releaseDate ? new Date(releaseDate).getFullYear() : '';
   
-  // Calculate rating class based on vote average
-  const getRatingClass = (rating: number) => {
-    if (rating >= 7) return styles.ratingHigh;
-    if (rating >= 5) return styles.ratingMedium;
-    return styles.ratingLow;
-  };
-
-  // Check if it's a new release (within 14 days)
-  const isNewRelease = () => {
-    const releaseDate = isMovieItem ? item.release_date : item.first_air_date;
-    if (!releaseDate) return false;
-    const releaseDay = new Date(releaseDate);
-    const today = new Date();
-    const diffTime = Math.abs(today.getTime() - releaseDay.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= 14 && releaseDay <= today;
-  };
-
   return (
     <div 
       className={styles.card}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => onClick && onClick(item)}
     >
-      <Link href={`/${mediaType}/${item.id}`}>
-        <div className={styles.imageContainer}>
-          <motion.div
-            animate={{ scale: isHovered ? 1.1 : 1 }}
-            transition={{ duration: 0.3 }}
-            style={{ width: '100%', height: '100%', position: 'absolute' }}
-          >
-            <Image 
-              src={posterPath}
-              alt={title}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className={styles.poster}
-              priority={false}
-            />
-          </motion.div>
-          
-          <motion.div 
-            className={`${styles.rating} ${getRatingClass(item.vote_average)}`}
-          >
-            <Star size={10} style={{ marginRight: '2px' }} />
-            {item.vote_average.toFixed(1)}
-          </motion.div>
-          
-          {isNewRelease() && (
-            <div className={styles.ribbon}>NEW</div>
-          )}
-          
-          {/* Overlay appears on hover */}
-          <motion.div 
-            className={styles.overlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className={styles.overlayContent}>
-              <h3>{title}</h3>
-              <p className={styles.genres}>
-                {item.genre_ids?.slice(0, 2).map((genreId, i, arr) => (
-                  <span key={genreId}>
-                    {/* This would need a genre mapping function */}
-                    {`Genre ${genreId}`}{i !== arr.length - 1 ? ', ' : ''}
-                  </span>
-                ))}
-              </p>
-              <div className={styles.watchNow}>
-                Watch Now
-              </div>
-            </div>
-          </motion.div>
+      <div className={styles.imageContainer}>
+        {item.poster_path ? (
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+            alt={title}
+            fill
+            className={styles.poster}
+            priority={false}
+          />
+        ) : (
+          <div className={styles.noPoster}>No Image Available</div>
+        )}
+        
+        {/* Rating on Movie/TV card */}
+        <div className={`${styles.rating} ${getRatingClass(item.vote_average)}`}>
+          ★ {item.vote_average.toFixed(1)}
         </div>
-      </Link>
+        
+        {/*ribbon on Movie/TV card*/}
+        {isNewRelease(releaseDate) && (
+          <div className={styles.ribbon}>NEW</div>
+        )}
+        
+        {/* Information on Movie/TV card*/}
+        <div className={styles.overlay}>
+          <div className={styles.overlayContent}>
+            <h3>{title} {year && `(${year})`}</h3>
+            <div className={styles.genres}>
+              {formatGenres(item.genre_ids)}
+            </div>
+            <div className={styles.watchNow}>Watch Now</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { MediaItem } from '@/types/types';
 import { isMovie } from '@/services/tmdb';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import styles from './MovieCarousel.module.css';
+import { CarouselSkeleton } from '@/components/Skeleton/CarouselSkeleton';
 
 interface MovieCarouselProps {
   items: MediaItem[];
@@ -25,12 +26,13 @@ const MovieCarousel = ({
   currentPage = 1,
   onPageChange,
   isLoading = false,
-  autoplaySpeed = 5000 // 5 seconds default
+  autoplaySpeed = 5000 // Speed of the autoplay
 }: MovieCarouselProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(5);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
+  const [localLoading, setLocalLoading] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -48,15 +50,31 @@ const MovieCarousel = ({
       }
     };
 
-    handleResize(); // Initial call
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  
+  // Add artificial delay to show skeleton
+  useEffect(() => {
+    // If parent component already handles loading state, respect it
+    if (isLoading) {
+      setLocalLoading(true);
+      return;
+    }
+    
+    const timer = setTimeout(() => {
+      setLocalLoading(false);
+    }, 2000); // 2 second delay
+    
+    return () => clearTimeout(timer);
+  }, [isLoading, items]);
 
   // Calculate maximum number of slides
+  // when dealing with multiple movie cards, the size of the movie card and the card count changes , cause you can only fit some of the cards on screen
   const maxSlide = Math.max(0, items.length - slidesToShow);
 
-  // Autoplay functionality
+  // Autoplay
   useEffect(() => {
     if (isAutoPlaying && !isDragging) {
       autoplayTimerRef.current = setTimeout(() => {
@@ -71,7 +89,7 @@ const MovieCarousel = ({
     };
   }, [activeSlide, isAutoPlaying, isDragging, autoplaySpeed]);
 
-  // Navigation functions
+  // Navigation
   const nextSlide = () => {
     if (activeSlide < maxSlide) {
       setActiveSlide(prev => Math.min(prev + 1, maxSlide));
@@ -79,7 +97,7 @@ const MovieCarousel = ({
       onPageChange(currentPage + 1);
       setActiveSlide(0);
     } else {
-      // Loop back to the beginning when reaching the end
+      // Loop back
       setActiveSlide(0);
     }
   };
@@ -89,10 +107,10 @@ const MovieCarousel = ({
       setActiveSlide(prev => Math.max(prev - 1, 0));
     } else if (currentPage > 1 && onPageChange) {
       onPageChange(currentPage - 1);
-      // Set to last slide of previous page
+      // Set to last slide
       setActiveSlide(maxSlide);
     } else {
-      // Loop to the end when at the beginning
+      // Loop to the end
       setActiveSlide(maxSlide);
     }
   };
@@ -117,7 +135,7 @@ const MovieCarousel = ({
     }
   };
 
-  // Drag handlers
+  // Drag handlers on mobile or mouse drag
   const handleDragStart = () => {
     setIsDragging(true);
     if (autoplayTimerRef.current) {
@@ -128,7 +146,8 @@ const MovieCarousel = ({
   const handleDragEnd = (info: any) => {
     setIsDragging(false);
     
-    // Calculate which slide to snap to based on velocity and offset
+    // Calculate which slide to snap
+    // I wanted to have some snap to the slide changings.
     const cardWidth = carouselRef.current?.offsetWidth ? carouselRef.current.offsetWidth / slidesToShow : 0;
     
     if (Math.abs(info.velocity.x) > 500) {
@@ -139,7 +158,7 @@ const MovieCarousel = ({
         prevSlide();
       }
     } else if (Math.abs(info.offset.x) > cardWidth / 3) {
-      // Slow drag but significant distance
+      // Slow
       if (info.offset.x < 0) {
         nextSlide();
       } else {
@@ -150,23 +169,10 @@ const MovieCarousel = ({
     resetAutoplayTimer();
   };
 
-  // Pagination dots based on visible slides
   const visibleSlideGroups = Math.ceil(items.length / slidesToShow);
 
-  if (isLoading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.carouselHeader}>
-          <h2 className={styles.title}>{title || "Loading..."}</h2>
-        </div>
-        
-        <div className={styles.loading}>
-          {Array(slidesToShow).fill(0).map((_, i) => (
-            <div key={i} className={styles.loadingCard}></div>
-          ))}
-        </div>
-      </div>
-    );
+  if (isLoading || localLoading) {
+    return <CarouselSkeleton />;
   }
 
   if (!items || items.length === 0) {

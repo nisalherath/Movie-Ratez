@@ -1,4 +1,4 @@
-'use client'; // Important for Next.js client components
+'use client';
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
@@ -18,22 +18,21 @@ const LenisProvider: React.FC<LenisProviderProps> = ({ children }) => {
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
-      smoothTouch: false, // Disable smooth touch to prevent extra movements
+      smoothTouch: false,
       smoothWheel: true,
-      wheelMultiplier: 1.0, // Adjust wheel multiplier for better control
-      lerp: 0.1, // Lower value for more precise stopping
+      wheelMultiplier: 1.0,
+      lerp: 0.1,
       gestureOrientation: "vertical",
       orientation: "vertical",
       touchMultiplier: 1.0,
-      syncTouch: false, // Don't synchronize touch events
-      syncTouchLerp: 0.1, // Lower value for more precise stopping with touch
+      syncTouch: false,
+      syncTouchLerp: 0.1,
     });
 
-    // Add listener to stop completely once scrolling ends
     lenis.on('scroll', ({ velocity }: { velocity: number }) => {
       if (Math.abs(velocity) < 0.001) {
         lenis.stop();
-        setTimeout(() => lenis.start(), 30); // Short pause before restarting
+        setTimeout(() => lenis.start(), 30);
       }
     });
 
@@ -62,7 +61,7 @@ const LenisProvider: React.FC<LenisProviderProps> = ({ children }) => {
         if (lenisRef.current) {
           lenisRef.current.start();
         }
-      }, 50); // Add small delay before restarting to prevent residual momentum
+      }, 50);
     }
   }, [pathname]);
 

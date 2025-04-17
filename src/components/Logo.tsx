@@ -16,7 +16,7 @@ const MovieRatez: React.FC<MovieRatezProps> = ({
   size,
   ...props
 }) => {
-  // Set dimensions based on size prop
+  // I needed to change the svg size easily
   const getDimensions = () => {
     if (width && height) return { width, height };
     

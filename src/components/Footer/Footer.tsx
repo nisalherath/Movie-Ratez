@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Github, Twitter, Instagram, Mail, ChevronUp } from 'lucide-react';
+import { Github, Mail, ChevronUp } from 'lucide-react';
 import styles from './Footer.module.css';
 import MovieRatez from "../Logo";
 
 const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+  {/*Scroll to Tp Button Logic*/}
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -65,22 +66,19 @@ const Footer = () => {
 
         <div className={styles.footerBottom}>
           <div className={styles.socialLinks}>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/nisalherath/Movie-Ratez" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <Github size={20} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <Twitter size={20} />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <Instagram size={20} />
-            </a>
-            <a href="mailto:info@movieratez.com" aria-label="Email">
+            <a href="mailto:nisal@nisal.lk" aria-label="Email">
               <Mail size={20} />
             </a>
           </div>
 
           <div className={styles.copyright}>
-            &copy; {new Date().getFullYear()} MOVIEratez. All rights reserved.
+            &copy; {new Date().getFullYear()} Made with ❤️ by <a href="https://nisal.lk/" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              Nisal.
+            </a>{" "} <br></br>
+             All rights reserved.
           </div>
         </div>
       </div>

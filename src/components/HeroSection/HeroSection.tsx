@@ -7,17 +7,32 @@ import { Play, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Movie } from '@/types/types';
 import styles from './HeroSection.module.css';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
+import { HeroSkeleton } from '@/components/Skeleton/HeroSkeleton';
 
 export default function HeroSection({ movies }: { movies: Movie[] }) {
+  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [displayMovies, setDisplayMovies] = useState<Movie[]>([]);
+  
+  // Add artificial delay to show skeleton
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDisplayMovies(movies);
+      setLoading(false);
+    }, 1800); // 1.8 second delay
+    
+    return () => clearTimeout(timer);
+  }, [movies]);
+
+  // Skeleton for Hero
+  if (loading || !displayMovies.length) return <HeroSkeleton />;
   
   return (
     <section className={styles.hero}>
+        {/*Main Swiper*/}
       <Swiper
         modules={[Autoplay, EffectFade, Pagination]}
         autoplay={{ 
@@ -36,7 +51,7 @@ export default function HeroSection({ movies }: { movies: Movie[] }) {
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className={styles.swiper}
       >
-        {movies.map((movie, index) => (
+        {displayMovies.map((movie, index) => (
           <SwiperSlide key={movie.id} className={styles.slide}>
             <div className={styles.backdrop}>
               <img
@@ -47,6 +62,7 @@ export default function HeroSection({ movies }: { movies: Movie[] }) {
               <div className={styles.overlay}></div>
             </div>
             
+            {/*Animating the Movie details inside the Swiper with a lil bit of a Delay*/}
             <AnimatePresence mode="wait">
               {activeIndex === index && (
                 <div className={styles.content}>

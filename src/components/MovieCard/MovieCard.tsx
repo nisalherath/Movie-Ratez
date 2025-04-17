@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Star, CalendarDays, Film, Tv } from 'lucide-react';
 import { getImageUrl, isMovie } from '@/services/tmdb';
+import { mapGenreIdsToNames } from '@/services/genre';
 import { MediaItem } from '@/types/types';
 import styles from './MovieCard.module.css';
 
@@ -11,16 +12,30 @@ interface MovieCardProps {
   item: MediaItem;
 }
 
+// Helper functions to safely get title and date
+// I ran into a problem where the Movie Type and the TV type would get mumbo Jumbod
+const getTitle = (item: MediaItem): string => {
+  return item.media_type === 'tv' ? item.name! : item.title!;
+};
+
+const getReleaseDate = (item: MediaItem): string => {
+  return item.media_type === 'tv' ? item.first_air_date! : item.release_date!;
+};
+
+const getMediaType = (item: MediaItem): 'movie' | 'tv' => {
+  return item.media_type || (isMovie(item) ? 'movie' : 'tv');
+};
+
 const MovieCard = ({ item }: MovieCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  const isMovieItem = isMovie(item);
-  const title = isMovieItem ? item.title : item.name;
-  const releaseDate = isMovieItem ? item.release_date : item.first_air_date;
+  const title = getTitle(item);
+  const releaseDate = getReleaseDate(item);
   const formattedDate = releaseDate ? new Date(releaseDate).getFullYear() : 'Unknown';
   const posterPath = getImageUrl(item.poster_path);
-  const mediaType = item.media_type || (isMovieItem ? 'movie' : 'tv');
+  const mediaType = getMediaType(item);
+  const isMovieItem = mediaType === 'movie';
   
-  // Check if it's a new release (within 14 days)
+  // New Released in the last Two Weeks
   const isNewRelease = () => {
     if (!releaseDate) return false;
     const releaseDay = new Date(releaseDate);
@@ -30,12 +45,18 @@ const MovieCard = ({ item }: MovieCardProps) => {
     return diffDays <= 14 && releaseDay <= today;
   };
   
-  // Calculate rating class based on vote average
+  // Rating Calc
   const getRatingClass = (rating: number) => {
     if (rating >= 7) return styles.ratingHigh;
     if (rating >= 5) return styles.ratingMedium;
     return styles.ratingLow;
   };
+
+  // Map genre IDs to names using our utility function
+  const genreNames = mapGenreIdsToNames(
+    item.genre_ids, 
+    mediaType
+  );
 
   return (
     <motion.div 
@@ -65,7 +86,7 @@ const MovieCard = ({ item }: MovieCardProps) => {
             <div className={styles.ribbon}>NEW</div>
           )}
           
-          {/* Overlay appears on hover */}
+          {/* When hover, show the Overlay of details */}
           <motion.div 
             className={styles.overlay}
             initial={{ opacity: 0 }}
@@ -75,10 +96,9 @@ const MovieCard = ({ item }: MovieCardProps) => {
             <div className={styles.overlayContent}>
               <h3>{title}</h3>
               <p className={styles.genres}>
-                {item.genre_ids?.slice(0, 2).map((genreId, i, arr) => (
-                  <span key={genreId}>
-                    {/* This would need a genre mapping function */}
-                    {`Genre ${genreId}`}{i !== arr.length - 1 ? ', ' : ''}
+                {genreNames.slice(0, 2).map((genreName, i, arr) => (
+                  <span key={i}>
+                    {genreName}{i !== arr.length - 1 ? ', ' : ''}
                   </span>
                 ))}
               </p>

@@ -26,7 +26,7 @@ const MovieGrid = ({
   const [visiblePage, setVisiblePage] = useState(currentPage || 1);
   const [isMounted, setIsMounted] = useState(false);
   
-  // For smooth animation when changing pages
+  // smooth changing pages
   useEffect(() => {
     setIsMounted(true);
     setVisiblePage(currentPage || 1);
@@ -34,12 +34,11 @@ const MovieGrid = ({
 
   const handlePageChange = (newPage: number) => {
     if (onPageChange && newPage !== currentPage && newPage > 0 && newPage <= totalPages) {
-      // First update the visual state for smooth transition
       setVisiblePage(newPage);
-      // Then trigger the actual page change
+      
       onPageChange(newPage);
       
-      // Scroll to top smoothly
+      // Scroll to top after a change on a page
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -47,7 +46,7 @@ const MovieGrid = ({
     }
   };
 
-  // Generate pagination buttons
+  // Page Buttons based on fetch
   const renderPaginationButtons = () => {
     const buttons = [];
     const maxVisibleButtons = 5;
@@ -67,16 +66,15 @@ const MovieGrid = ({
       </motion.button>
     );
     
-    // Calculate start and end page numbers
+    // start and end page
     let startPage = Math.max(2, page - Math.floor(maxVisibleButtons / 2));
     let endPage = Math.min(totalPages - 1, startPage + maxVisibleButtons - 3);
     
-    // Adjust start page if end page is maxed out
     if (endPage === totalPages - 1) {
       startPage = Math.max(2, endPage - maxVisibleButtons + 3);
     }
     
-    // Add ellipsis after first page if needed
+    // The dots need to appear when there are so many pages!
     if (startPage > 2) {
       buttons.push(<span key="ellipsis1" className={styles.ellipsis}>...</span>);
     }
@@ -96,12 +94,12 @@ const MovieGrid = ({
       );
     }
     
-    // Add ellipsis before last page if needed
+    // The dots need to appear when there are so many pages!
     if (endPage < totalPages - 1 && totalPages > 1) {
       buttons.push(<span key="ellipsis2" className={styles.ellipsis}>...</span>);
     }
     
-    // Always show last page if there is more than one page
+    // Always show last page if there is more than one page, in this case, i have 500 pages fetched
     if (totalPages > 1) {
       buttons.push(
         <motion.button 
@@ -119,18 +117,6 @@ const MovieGrid = ({
     
     return buttons;
   };
-
-  if (isLoading) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loading}>
-          {Array(12).fill(0).map((_, i) => (
-            <div key={i} className={styles.loadingCard}></div>
-          ))}
-        </div>
-      </div>
-    );
-  }
 
   if (!items || items.length === 0) {
     return (
@@ -180,7 +166,7 @@ const MovieGrid = ({
           <motion.button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className={styles.pageButton}
+            className={`${styles.pageButton} ${styles.navButton}`}
             whileHover={{ scale: currentPage !== 1 ? 1.1 : 1 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -193,7 +179,7 @@ const MovieGrid = ({
           <motion.button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className={styles.pageButton}
+            className={`${styles.pageButton} ${styles.navButton}`}
             whileHover={{ scale: currentPage !== totalPages ? 1.1 : 1 }}
             whileTap={{ scale: 0.95 }}
           >

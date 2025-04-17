@@ -1,0 +1,364 @@
+.pageContainer {
+  min-height: 100vh;
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentWrapper {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.pageTitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  position: relative;
+  display: inline-block;
+}
+
+.pageTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: var(--bright-bluey);
+  border-radius: 2px;
+}
+
+.resultCount {
+  margin-bottom: 2rem;
+  color: var(--less-darkie);
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Poppins', sans-serif;
+}
+
+.highlight {
+  color: var(--dark-bluey);
+  font-weight: 500;
+}
+
+/* Pagination styles */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.paginationButton {
+  background-color: transparent;
+  color: var(--dark-bluey);
+  border: 1px solid var(--dark-bluey);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.paginationButton:hover {
+  background-color: var(--dark-bluey);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 10px rgba(13, 115, 119, 0.2);
+}
+
+.paginationButton:active {
+  transform: translateY(0);
+}
+
+.paginationButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--less-darkie);
+  color: var(--less-darkie);
+}
+
+.paginationButton:disabled:hover {
+  background-color: transparent;
+  color: var(--less-darkie);
+  transform: none;
+  box-shadow: none;
+}
+
+.activePage {
+  background-color: var(--dark-bluey);
+  color: white;
+  border: 1px solid var(--dark-bluey);
+}
+
+.pageNumber {
+  background: transparent;
+  border: 1px solid var(--dark-bluey);
+  color: var(--dark-bluey);
+  border-radius: 6px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.pageNumber:hover {
+  background-color: var(--dark-bluey);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(13, 115, 119, 0.2);
+}
+
+.pageNumber.active {
+  background-color: var(--dark-bluey);
+  color: white;
+  box-shadow: 0 2px 10px rgba(13, 115, 119, 0.3);
+}
+
+.pageEllipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: var(--dark-bluey);
+  font-weight: 500;
+}
+
+/* Loading state */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  color: var(--less-darkie);
+  font-family: 'Poppins', sans-serif;
+}
+
+.loadingSpinner {
+  animation: spin 1.5s linear infinite;
+  margin-bottom: 1rem;
+  color: var(--dark-bluey);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error state */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  color: var(--less-darkie);
+  font-family: 'Poppins', sans-serif;
+}
+
+.errorContainer svg {
+  color: var(--pink);
+  margin-bottom: 1.5rem;
+}
+
+.errorMessage {
+  font-size: 1.1rem;
+  max-width: 500px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.retryButton {
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  background-color: var(--dark-bluey);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(13, 115, 119, 0.2);
+}
+
+.retryButton:hover {
+  background-color: var(--bright-bluey);
+  color: var(--darkie);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(20, 255, 236, 0.3);
+}
+
+.retryButton:active {
+  transform: translateY(0);
+}
+
+/* Empty search state */
+.emptySearchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  color: var(--less-darkie);
+  font-family: 'Poppins', sans-serif;
+}
+
+.emptySearchContainer svg {
+  color: var(--purple);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+/* No results state */
+.noResultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.noResultsContainer p:first-child {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.searchTips {
+  color: var(--less-darkie);
+  max-width: 500px;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1024px) {
+  .pageTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 1.5rem 0;
+  }
+  
+  .pageTitle {
+    font-size: 1.8rem;
+  }
+  
+  .pageTitle::after {
+    width: 50px;
+    height: 3px;
+  }
+  
+  .resultCount {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .loadingContainer, 
+  .errorContainer, 
+  .emptySearchContainer,
+  .noResultsContainer {
+    min-height: 40vh;
+  }
+  
+  .errorMessage {
+    font-size: 1rem;
+  }
+  
+  /* Pagination responsive adjustments */
+  .paginationContainer {
+    gap: 0.3rem;
+  }
+  
+  .paginationButton {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .pageNumber, .pageEllipsis {
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageContainer {
+    padding: 1rem 0;
+  }
+  
+  .pageTitle {
+    font-size: 1.5rem;
+  }
+  
+  .pageTitle::after {
+    width: 40px;
+    height: 3px;
+  }
+  
+  .resultCount {
+    font-size: 0.85rem;
+  }
+  
+  .retryButton {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .errorMessage {
+    font-size: 0.95rem;
+  }
+  
+  /* Pagination mobile adjustments */
+  .paginationContainer {
+    gap: 0.25rem;
+  }
+  
+  .paginationButton {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  .pageNumber, .pageEllipsis {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+  
+  /* Hide some page numbers on very small screens */
+  .hideMobile {
+    display: none;
+  }
+}

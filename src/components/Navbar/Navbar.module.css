@@ -60,10 +60,6 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.logo:hover {
-  transform: scale(1.05);
-}
-
 .logo span {
   color: rgb(13, 115, 119);
 }

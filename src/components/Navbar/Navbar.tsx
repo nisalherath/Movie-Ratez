@@ -22,51 +22,50 @@ const Navbar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if window is defined (client-side) before accessing it
+
     if (typeof window !== 'undefined') {
-      // Initial check for mobile viewport
+
       setIsMobile(window.innerWidth <= 1024);
       
-      // Set up scroll event listener with improved handling
       const handleScroll = () => {
         const currentScrollY = window.scrollY;
         
-        // Determine if scrolled for styling
         setIsScrolled(currentScrollY > 50);
         
-        // Only hide navbar when menu and search are closed
         if (!isMenuOpen && !isSearchOpen) {
-          // Control navbar visibility based on scroll direction
+    
+          
           if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
-            // Scrolling down & past initial threshold - hide navbar
+            // if you sroll down the navbar gets hifdden
             setIsVisible(false);
           } else {
-            // Scrolling up or at the top - show navbar
+            // scroll up, you see the navbar immediately
             setIsVisible(true);
           }
         }
         
-        // Update the scroll position
         lastScrollY.current = currentScrollY;
       };
       
-      // Set up resize event listener
+
+      // this is to handle the mobile menu events
+      // I wanted to change the size of elements and the visibility of menu items
       const handleResize = () => {
         const mobile = window.innerWidth <= 1024;
         setIsMobile(mobile);
         if (!mobile) {
-          setIsSearchOpen(false); // Reset search state when going to desktop
-          setIsMenuOpen(false);   // Reset menu state when going to desktop
-          document.body.style.overflow = ''; // Ensure body scroll is enabled when resizing to desktop
+          setIsSearchOpen(false);
+          setIsMenuOpen(false);
+          document.body.style.overflow = '';
         }
       };
       
-      // Handle clicks outside navbar to close menu
+      // Scroll is disabled when a mobile user has the menu open so we need to handle the clicks outside the menu!!!
       const handleClickOutside = (event: MouseEvent) => {
         if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
           if (isMenuOpen) {
             setIsMenuOpen(false);
-            document.body.style.overflow = ''; // Re-enable scrolling
+            document.body.style.overflow = ''; // Re-enable scroll
           }
           if (isSearchOpen) {
             setIsSearchOpen(false);
@@ -74,7 +73,7 @@ const Navbar = () => {
         }
       };
       
-      // Use passive listener for better scroll performance
+
       window.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', handleResize);
       document.addEventListener('mousedown', handleClickOutside);
@@ -84,7 +83,7 @@ const Navbar = () => {
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleResize);
         document.removeEventListener('mousedown', handleClickOutside);
-        document.body.style.overflow = ''; // Ensure body scroll is enabled on unmount
+        document.body.style.overflow = '';
       };
     }
   }, [isMenuOpen, isSearchOpen]);
@@ -96,13 +95,13 @@ const Navbar = () => {
     }
   }, [isSearchOpen]);
 
-  // Lock body scroll when menu is open on mobile
+  // Scroll is disabled when a mobile user has the menu open!!!
   useEffect(() => {
     if (isMobile) {
       if (isMenuOpen) {
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        document.body.style.overflow = 'hidden'; // No scrolling
       } else {
-        document.body.style.overflow = ''; // Allow scrolling
+        document.body.style.overflow = ''; // scroll again
       }
     }
     
@@ -112,7 +111,7 @@ const Navbar = () => {
     }
     
     return () => {
-      document.body.style.overflow = ''; // Cleanup
+      document.body.style.overflow = '';
     };
   }, [isMenuOpen, isSearchOpen, isMobile]);
 
@@ -150,11 +149,10 @@ const Navbar = () => {
   };
 
   const handleNavLinkClick = () => {
-    // Close menu after navigation on mobile
     if (isMobile) {
       setIsMenuOpen(false);
       setActiveDropdown(null);
-      document.body.style.overflow = ''; // Re-enable scrolling
+      document.body.style.overflow = '';
     }
   };
 
@@ -164,7 +162,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Overlay for mobile menu */}
       {isMobile && isMenuOpen && (
         <div className={styles.menuOverlay} onClick={() => setIsMenuOpen(false)} />
       )}
@@ -271,8 +268,7 @@ const Navbar = () => {
                 </motion.form>
               )}
             </AnimatePresence>
-            
-            {/* Desktop search form or mobile search button */}
+
             {(!isMobile || !isSearchOpen) && (
               <>
                 {!isMobile && (
@@ -301,7 +297,7 @@ const Navbar = () => {
                   </button>
                 )}
                 
-                {/* Mobile Only Render */}
+                {/* Mobile Only */}
                 {isMobile && (
                   <button 
                     className={styles.mobileMenuBtn}

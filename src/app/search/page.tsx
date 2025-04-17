@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { searchMedia } from '@/services/tmdb';
 import MovieGrid from '@/components/MovieGrid/MovieGrid';
+import { SearchPageSkeleton } from '@/components/Skeleton/SearchPageSkeleton';
 import { TMDBResponse } from '@/types/types';
-import { Loader2, Search, AlertTriangle } from 'lucide-react';
+import { Search, AlertTriangle } from 'lucide-react';
 import styles from './MoviesPage.module.css';
 
 export default function SearchPage() {
@@ -63,22 +64,17 @@ export default function SearchPage() {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
-        <h1 className={styles.pageTitle}>
-          {query ? `Results for "${query}"` : 'Search'}
-        </h1>
-        
         {!query ? (
           <div className={styles.emptySearchContainer}>
+            <h1 className={styles.pageTitle}>Search</h1>
             <Search size={48} />
             <p>Enter a search term in the search bar above to find movies and TV shows</p>
           </div>
         ) : loading ? (
-          <div className={styles.loadingContainer}>
-            <Loader2 className={styles.loadingSpinner} size={40} />
-            <p>Searching for "{query}"...</p>
-          </div>
+          <SearchPageSkeleton />
         ) : error ? (
           <div className={styles.errorContainer}>
+            <h1 className={styles.pageTitle}>Error</h1>
             <AlertTriangle size={32} />
             <p>{error}</p>
             <button 
@@ -90,13 +86,15 @@ export default function SearchPage() {
           </div>
         ) : !data || data.results.length === 0 ? (
           <div className={styles.noResultsContainer}>
-            <p>No results found for "{query}"</p>
+            <h1 className={styles.pageTitle}>Results for "{query}"</h1>
+            <p>No results found</p>
             <p className={styles.searchTips}>
               Try checking your spelling or using different keywords
             </p>
           </div>
         ) : (
           <>
+            <h1 className={styles.pageTitle}>Results for "{query}"</h1>
             <p className={styles.resultCount}>
               Found {data.total_results} results
             </p>
