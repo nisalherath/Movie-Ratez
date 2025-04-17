@@ -19,6 +19,15 @@ interface MovieCarouselProps {
   autoplaySpeed?: number;
 }
 
+interface DragEndInfo {
+  velocity: {
+    x: number;
+  };
+  offset: {
+    x: number;
+  };
+}
+
 const MovieCarousel = ({
   items,
   title,
@@ -74,6 +83,19 @@ const MovieCarousel = ({
   // when dealing with multiple movie cards, the size of the movie card and the card count changes , cause you can only fit some of the cards on screen
   const maxSlide = Math.max(0, items.length - slidesToShow);
 
+  // Navigation
+  const nextSlide = () => {
+    if (activeSlide < maxSlide) {
+      setActiveSlide(prev => Math.min(prev + 1, maxSlide));
+    } else if (currentPage < (totalPages || 1) && onPageChange) {
+      onPageChange(currentPage + 1);
+      setActiveSlide(0);
+    } else {
+      // Loop back
+      setActiveSlide(0);
+    }
+  };
+
   // Autoplay
   useEffect(() => {
     if (isAutoPlaying && !isDragging) {
@@ -87,20 +109,7 @@ const MovieCarousel = ({
         clearTimeout(autoplayTimerRef.current);
       }
     };
-  }, [activeSlide, isAutoPlaying, isDragging, autoplaySpeed]);
-
-  // Navigation
-  const nextSlide = () => {
-    if (activeSlide < maxSlide) {
-      setActiveSlide(prev => Math.min(prev + 1, maxSlide));
-    } else if (currentPage < (totalPages || 1) && onPageChange) {
-      onPageChange(currentPage + 1);
-      setActiveSlide(0);
-    } else {
-      // Loop back
-      setActiveSlide(0);
-    }
-  };
+  }, [activeSlide, isAutoPlaying, isDragging, autoplaySpeed, nextSlide]);
 
   const prevSlide = () => {
     if (activeSlide > 0) {
@@ -143,7 +152,7 @@ const MovieCarousel = ({
     }
   };
 
-  const handleDragEnd = (info: any) => {
+  const handleDragEnd = (info: DragEndInfo) => {
     setIsDragging(false);
     
     // Calculate which slide to snap
@@ -250,7 +259,7 @@ const MovieCarousel = ({
               restDelta: 0.01
             }}
           >
-            {items.map((item, index) => (
+            {items.map((item) => (
               <div 
                 key={`${item.id}-${isMovie(item) ? 'movie' : 'tv'}`}
                 className={styles.slide}
@@ -273,18 +282,18 @@ const MovieCarousel = ({
 
       {/* Pagination dots */}
       <div className={styles.paginationDots}>
-        {Array.from({ length: visibleSlideGroups }).map((_, index) => {
-          const dotPosition = index * slidesToShow;
+        {Array.from({ length: visibleSlideGroups }).map((_, groupIndex) => {
+          const dotPosition = groupIndex * slidesToShow;
           return (
             <button
-              key={index}
+              key={groupIndex}
               onClick={() => goToSlide(dotPosition)}
               className={`${styles.paginationDot} ${
                 activeSlide >= dotPosition && activeSlide < dotPosition + slidesToShow
                   ? styles.activeDot
                   : ''
               }`}
-              aria-label={`Go to slide group ${index + 1}`}
+              aria-label={`Go to slide group ${groupIndex + 1}`}
             />
           );
         })}

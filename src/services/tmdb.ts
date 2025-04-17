@@ -2,6 +2,21 @@ const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_TMDB_BASE_URL;
 const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL;
 
+// TypeScript interfaces
+interface Movie {
+  id: number;
+  title: string;
+  release_date?: string;
+  vote_average?: number;
+  overview?: string;
+  backdrop_path?: string;
+}
+
+interface TVShow {
+  id: number;
+  name: string;
+}
+
 // logs and debugs
 const fetchFromTMDB = async (endpoint: string, page: number = 1) => {
   try {
@@ -129,10 +144,10 @@ export const fetchMediaDetails = async (id: number, mediaType: 'movie' | 'tv') =
   }
 };
 
-export const isMovie = (media: any): media is Movie => {
-  return media.title !== undefined;
+export const isMovie = (media: Movie | TVShow): media is Movie => {
+  return (media as Movie).title !== undefined;
 };
 
-export const isTVShow = (media: any): media is TVShow => {
-  return media.name !== undefined;
+export const isTVShow = (media: Movie | TVShow): media is TVShow => {
+  return (media as TVShow).name !== undefined;
 };

@@ -13,15 +13,13 @@ interface MovieGridProps {
   totalPages: number;
   currentPage: number;
   onPageChange?: (page: number) => void;
-  isLoading?: boolean;
 }
 
 const MovieGrid = ({ 
   items, 
   totalPages, 
   currentPage, 
-  onPageChange,
-  isLoading = false
+  onPageChange
 }: MovieGridProps) => {
   const [visiblePage, setVisiblePage] = useState(currentPage || 1);
   const [isMounted, setIsMounted] = useState(false);
@@ -67,12 +65,8 @@ const MovieGrid = ({
     );
     
     // start and end page
-    let startPage = Math.max(2, page - Math.floor(maxVisibleButtons / 2));
-    let endPage = Math.min(totalPages - 1, startPage + maxVisibleButtons - 3);
-    
-    if (endPage === totalPages - 1) {
-      startPage = Math.max(2, endPage - maxVisibleButtons + 3);
-    }
+    const startPage = Math.max(2, page - Math.floor(maxVisibleButtons / 2));
+    const endPage = Math.min(totalPages - 1, startPage + maxVisibleButtons - 3);
     
     // The dots need to appear when there are so many pages!
     if (startPage > 2) {

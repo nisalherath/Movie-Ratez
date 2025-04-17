@@ -86,7 +86,7 @@ export default function SearchPage() {
           </div>
         ) : !data || data.results.length === 0 ? (
           <div className={styles.noResultsContainer}>
-            <h1 className={styles.pageTitle}>Results for "{query}"</h1>
+            <h1 className={styles.pageTitle}>Results for &ldquo;{query}&rdquo;</h1>
             <p>No results found</p>
             <p className={styles.searchTips}>
               Try checking your spelling or using different keywords
@@ -94,7 +94,7 @@ export default function SearchPage() {
           </div>
         ) : (
           <>
-            <h1 className={styles.pageTitle}>Results for "{query}"</h1>
+            <h1 className={styles.pageTitle}>Results for &ldquo;{query}&rdquo;</h1>
             <p className={styles.resultCount}>
               Found {data.total_results} results
             </p>

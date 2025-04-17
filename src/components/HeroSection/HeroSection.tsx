@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
-import { Play, Info } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Movie } from '@/types/types';
 import styles from './HeroSection.module.css';
@@ -11,6 +11,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import { HeroSkeleton } from '@/components/Skeleton/HeroSkeleton';
+import Image from 'next/image';
 
 export default function HeroSection({ movies }: { movies: Movie[] }) {
   const [loading, setLoading] = useState(true);
@@ -54,10 +55,13 @@ export default function HeroSection({ movies }: { movies: Movie[] }) {
         {displayMovies.map((movie, index) => (
           <SwiperSlide key={movie.id} className={styles.slide}>
             <div className={styles.backdrop}>
-              <img
+              <Image
                 src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                alt=""
+                alt={`${movie.title} backdrop`}
                 className={styles.backdropImage}
+                width={1920}
+                height={1080}
+                priority={index === 0}
               />
               <div className={styles.overlay}></div>
             </div>
