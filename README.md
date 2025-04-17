@@ -173,7 +173,7 @@
 ### Minimal Requirements
 `- Node.js v18 or higher` <br>
 `- npm v9 or higher`<br>
-`- TMDB API key ([Get it here](https://www.themoviedb.org/settings/api))`
+`- TMDB API key` ( [Get it here](https://www.themoviedb.org/settings/api) )
 
 <br><br>
 ***
