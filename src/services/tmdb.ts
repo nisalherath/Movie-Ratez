@@ -1,21 +1,8 @@
+import { Movie, TvShow, MediaItem } from '@/types/types';
+
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_TMDB_BASE_URL;
 const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL;
-
-// TypeScript interfaces
-interface Movie {
-  id: number;
-  title: string;
-  release_date?: string;
-  vote_average?: number;
-  overview?: string;
-  backdrop_path?: string;
-}
-
-interface TVShow {
-  id: number;
-  name: string;
-}
 
 // logs and debugs
 const fetchFromTMDB = async (endpoint: string, page: number = 1) => {
@@ -41,14 +28,6 @@ export const getImageUrl = (path: string | null, size: string = 'w500'): string 
   return `${IMAGE_BASE_URL}/${size}${path}`;
 };
 
-
-
-
-
-
-
-
-
 // Movie endpoints used 
 export const fetchTrendingMovies = async (page: number = 1) => {
   return fetchFromTMDB('/trending/movie/week', page);
@@ -69,12 +48,6 @@ export const fetchNowPlayingMovies = async (page: number = 1) => {
 export const fetchUpcomingMovies = async (page: number = 1) => {
   return fetchFromTMDB('/movie/upcoming', page);
 };
-
-
-
-
-
-
 
 // TV Show endpoints
 export const fetchTrendingTVShows = async (page: number = 1) => {
@@ -98,12 +71,6 @@ export const fetchAiringTodayTVShows = async (page: number = 1) => {
   return fetchFromTMDB('/tv/airing_today', page);
 };
 
-
-
-
-
-
-
 // Search
 export const searchMedia = async (query: string, page: number = 1) => {
   try {
@@ -121,13 +88,6 @@ export const searchMedia = async (query: string, page: number = 1) => {
   }
 };
 
-
-
-
-
-
-
-
 export const fetchMediaDetails = async (id: number, mediaType: 'movie' | 'tv') => {
   try {
     const url = `${BASE_URL}/${mediaType}/${id}?api_key=${API_KEY}&language=en-US`;
@@ -144,10 +104,11 @@ export const fetchMediaDetails = async (id: number, mediaType: 'movie' | 'tv') =
   }
 };
 
-export const isMovie = (media: Movie | TVShow): media is Movie => {
-  return (media as Movie).title !== undefined;
+// Updated type guards to use the correct types from types.ts
+export const isMovie = (media: Movie | TvShow | MediaItem): media is Movie => {
+  return media && typeof (media as Movie).title !== 'undefined';
 };
 
-export const isTVShow = (media: Movie | TVShow): media is TVShow => {
-  return (media as TVShow).name !== undefined;
+export const isTVShow = (media: Movie | TvShow | MediaItem): media is TvShow => {
+  return media && typeof (media as TvShow).name !== 'undefined';
 };

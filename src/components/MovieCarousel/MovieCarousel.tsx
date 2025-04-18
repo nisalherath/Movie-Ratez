@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, PanInfo } from 'framer-motion';
 import MovieCarouselCard from '@/components/MovieCarouselCard/MovieCarouselCard';
 import { MediaItem } from '@/types/types';
 import { isMovie } from '@/services/tmdb';
@@ -19,15 +19,6 @@ interface MovieCarouselProps {
   autoplaySpeed?: number;
 }
 
-interface DragEndInfo {
-  velocity: {
-    x: number;
-  };
-  offset: {
-    x: number;
-  };
-}
-
 const MovieCarousel = ({
   items,
   title,
@@ -35,7 +26,7 @@ const MovieCarousel = ({
   currentPage = 1,
   onPageChange,
   isLoading = false,
-  autoplaySpeed = 5000 // Speed of the autoplay
+  autoplaySpeed = 5000
 }: MovieCarouselProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(5);
@@ -44,8 +35,11 @@ const MovieCarousel = ({
   const [localLoading, setLocalLoading] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const getMaxSlide = useCallback(() => {
+    return Math.max(0, items.length - slidesToShow);
+  }, [items.length, slidesToShow]);
 
-  // Handle responsive slidesToShow based on screen width
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 600) {
@@ -64,9 +58,7 @@ const MovieCarousel = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   
-  // Add artificial delay to show skeleton
   useEffect(() => {
-    // If parent component already handles loading state, respect it
     if (isLoading) {
       setLocalLoading(true);
       return;
@@ -74,29 +66,46 @@ const MovieCarousel = ({
     
     const timer = setTimeout(() => {
       setLocalLoading(false);
-    }, 2000); // 2 second delay
+    }, 2000);
     
     return () => clearTimeout(timer);
   }, [isLoading, items]);
 
-  // Calculate maximum number of slides
-  // when dealing with multiple movie cards, the size of the movie card and the card count changes , cause you can only fit some of the cards on screen
-  const maxSlide = Math.max(0, items.length - slidesToShow);
-
-  // Navigation
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
+    const maxSlide = getMaxSlide();
     if (activeSlide < maxSlide) {
       setActiveSlide(prev => Math.min(prev + 1, maxSlide));
     } else if (currentPage < (totalPages || 1) && onPageChange) {
       onPageChange(currentPage + 1);
       setActiveSlide(0);
     } else {
-      // Loop back
       setActiveSlide(0);
     }
-  };
+  }, [activeSlide, getMaxSlide, currentPage, totalPages, onPageChange]);
 
-  // Autoplay
+  const prevSlide = useCallback(() => {
+    const maxSlide = getMaxSlide();
+    if (activeSlide > 0) {
+      setActiveSlide(prev => Math.max(prev - 1, 0));
+    } else if (currentPage > 1 && onPageChange) {
+      onPageChange(currentPage - 1);
+      setActiveSlide(maxSlide);
+    } else {
+      setActiveSlide(maxSlide);
+    }
+  }, [activeSlide, getMaxSlide, currentPage, onPageChange]);
+
+  const resetAutoplayTimer = useCallback(() => {
+    if (autoplayTimerRef.current) {
+      clearTimeout(autoplayTimerRef.current);
+    }
+    if (isAutoPlaying) {
+      autoplayTimerRef.current = setTimeout(() => {
+        nextSlide();
+      }, autoplaySpeed);
+    }
+  }, [isAutoPlaying, nextSlide, autoplaySpeed]);
+
   useEffect(() => {
     if (isAutoPlaying && !isDragging) {
       autoplayTimerRef.current = setTimeout(() => {
@@ -111,40 +120,16 @@ const MovieCarousel = ({
     };
   }, [activeSlide, isAutoPlaying, isDragging, autoplaySpeed, nextSlide]);
 
-  const prevSlide = () => {
-    if (activeSlide > 0) {
-      setActiveSlide(prev => Math.max(prev - 1, 0));
-    } else if (currentPage > 1 && onPageChange) {
-      onPageChange(currentPage - 1);
-      // Set to last slide
-      setActiveSlide(maxSlide);
-    } else {
-      // Loop to the end
-      setActiveSlide(maxSlide);
-    }
-  };
-
-  const goToSlide = (index: number) => {
+  const goToSlide = useCallback((index: number) => {
+    const maxSlide = getMaxSlide();
     setActiveSlide(Math.min(index, maxSlide));
     resetAutoplayTimer();
-  };
+  }, [getMaxSlide, resetAutoplayTimer]);
 
   const toggleAutoplay = () => {
     setIsAutoPlaying(!isAutoPlaying);
   };
 
-  const resetAutoplayTimer = () => {
-    if (autoplayTimerRef.current) {
-      clearTimeout(autoplayTimerRef.current);
-    }
-    if (isAutoPlaying) {
-      autoplayTimerRef.current = setTimeout(() => {
-        nextSlide();
-      }, autoplaySpeed);
-    }
-  };
-
-  // Drag handlers on mobile or mouse drag
   const handleDragStart = () => {
     setIsDragging(true);
     if (autoplayTimerRef.current) {
@@ -152,33 +137,35 @@ const MovieCarousel = ({
     }
   };
 
-  const handleDragEnd = (info: DragEndInfo) => {
-    setIsDragging(false);
-    
-    // Calculate which slide to snap
-    // I wanted to have some snap to the slide changings.
-    const cardWidth = carouselRef.current?.offsetWidth ? carouselRef.current.offsetWidth / slidesToShow : 0;
-    
-    if (Math.abs(info.velocity.x) > 500) {
-      // Fast swipe
-      if (info.velocity.x < 0) {
-        nextSlide();
-      } else {
-        prevSlide();
+  const handleDragEnd = useCallback(
+    (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+      setIsDragging(false);
+      
+      const cardWidth = carouselRef.current?.offsetWidth 
+        ? carouselRef.current.offsetWidth / slidesToShow 
+        : 0;
+      
+      if (Math.abs(info.velocity.x) > 500) {
+        if (info.velocity.x < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      } else if (Math.abs(info.offset.x) > cardWidth / 3) {
+        if (info.offset.x < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
       }
-    } else if (Math.abs(info.offset.x) > cardWidth / 3) {
-      // Slow
-      if (info.offset.x < 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
-    
-    resetAutoplayTimer();
-  };
+      
+      resetAutoplayTimer();
+    },
+    [slidesToShow, nextSlide, prevSlide, resetAutoplayTimer]
+  );
 
   const visibleSlideGroups = Math.ceil(items.length / slidesToShow);
+  const maxSlide = getMaxSlide();
 
   if (isLoading || localLoading) {
     return <CarouselSkeleton />;
@@ -244,7 +231,7 @@ const MovieCarousel = ({
           <motion.div 
             className={styles.track}
             drag="x"
-            dragConstraints={{ left: -(maxSlide * (100 / slidesToShow)) + '%', right: 0 }}
+            dragConstraints={{ left: -(maxSlide * (100 / slidesToShow)), right: 0 }}
             dragElastic={0.1}
             dragMomentum={false}
             onDragStart={handleDragStart}
@@ -280,7 +267,6 @@ const MovieCarousel = ({
         </button>
       </div>
 
-      {/* Pagination dots */}
       <div className={styles.paginationDots}>
         {Array.from({ length: visibleSlideGroups }).map((_, groupIndex) => {
           const dotPosition = groupIndex * slidesToShow;
