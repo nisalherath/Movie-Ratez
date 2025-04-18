@@ -177,7 +177,7 @@
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/movie-ratez.git
+git clone https://github.com/nisalherath/Movie-Ratez.git
 ```
 
 
@@ -306,39 +306,6 @@ movie-ratez/
 
 <br><br><br>
 
-***
-
-##  `Key Files Explained`
-<br>
-
-| File / Folder                                | Purpose                                                               |
-|---------------------------------------------|-----------------------------------------------------------------------|
-| `.env.local`                                 | Environment variables (e.g., API keys for TMDB)                       |
-| `public/images/`                             | Folder for static assets like logos, posters, or placeholders         |
-| `src/app/layout.tsx`                         | Root layout wrapper applied to all pages                              |
-| `src/app/page.tsx`                           | Main landing page of the app                                          |
-| `src/app/movies/[category]/page.tsx`         | Pages for various movie categories: Popular, Top-rated, Now Playing   |
-| `src/app/tv/[category]/page.tsx`             | Pages for TV show categories: Popular, Top-rated, Airing Today, On-TV |
-| `src/app/search/page.tsx`                    | Search results page for movies and TV shows                           |
-| `src/app/search/MoviePage.module.css`        | Scoped CSS styles for the search page                                 |
-| `src/components/HeroSection/`                | Swiper-based Hero section with related styles                         |
-| `src/components/MovieCard/`                  | Reusable card component for movie display                             |
-| `src/components/MovieGrid/`                  | Grid layout wrapper for cards                                         |
-| `src/components/MovieCarousel/`              | Horizontal movie swiper component                                     |
-| `src/components/MovieCarouselCard/`          | Carousel's individual card component                                  |
-| `src/components/Footer/`                     | Website footer and its styling                                        |
-| `src/components/Navbar/`                     | Top navigation bar with CSS module                                    |
-| `src/components/LenisProvider/LenisProvider.tsx` | Scroll smoothness using Lenis                                         |
-| `src/components/MovieAndTv/`                 | Wrapper layout for rendering Movie/TV pages                           |
-| `src/components/Skeleton/`                   | Placeholder skeletons shown during data loading                       |
-| `src/components/Logo.tsx`                    | SVG logo as a component                                               |
-| `src/services/genre.ts`                      | Handles fetching movie/TV genres from TMDB                            |
-| `src/services/tmdb.ts`                       | Core API functions to interact with TMDB                              |
-| `src/types/types.ts`                         | TypeScript interfaces for TMDB data                                   |
-| `src/styles/globals.css`                     | Global CSS across the entire project                                  |
-| `src/styles/variables.css`                   | CSS variables (colors, fonts, etc.)                                   |
-| `README.md`                                  | Project documentation and setup guide                                 |
-| `package.json`                               | Project dependencies and scripts                                      |
 
 ***
 <br>
@@ -349,7 +316,6 @@ movie-ratez/
 | `Skeleton/*` | Loading placeholders for different sections               |
 | `LenisProvider` | Enables smooth scrolling behavior                         |
 | `MovieAndTv` | Shared layout template for content pages                  |
-| `MovieCarousel` | Horizontal content slider implementation (on the HomePage)|
 
 <br><br><br>
 <hr>
@@ -376,4 +342,5 @@ This project is licensed under the [MIT License](LICENSE).
 ### [nisal@nisal.lk](mailto:nisal@nisal.lk)
 
 ### [nisal.lk](https://nisal.lk)
+
 </div>
