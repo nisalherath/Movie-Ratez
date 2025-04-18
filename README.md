@@ -38,6 +38,7 @@
 ### - [🍿 Project Overview](#project-overview-%EF%B8%8F)
 ### - [🍿 User Interface](#%EF%B8%8F-user-interface-%EF%B8%8F)
 ### - [🍿 Dependencies](#dependencies-%EF%B8%8F)
+### - [🍿 Rundown of the Libraries Used](#npm-packages-rundown-%EF%B8%8F)
 ### - [🍿 How To Run](#how-to-run-this-project-%EF%B8%8F)
 ### - [🍿 File Structure](#file-structure-%EF%B8%8F)
 ### - [🍿 License](#license-)
