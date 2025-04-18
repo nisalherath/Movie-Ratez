@@ -230,7 +230,7 @@ movie-ratez/
 │          │       │       │      └── page.tsx    # Popular Movies page
 │          │       │       ├── top-rated/
 │          │       │       │       └── page.tsx   # Top-rated Movies page
-│          │       │       ├── nowplaying/
+│          │       │       ├── now-playing/
 │          │       │       │       └── page.tsx   # Now Playing Movies page
 │          │       │       ├── upcoming/
 │          │       │               └── page.tsx   # Upcoming Movies page
@@ -241,7 +241,7 @@ movie-ratez/
 │          │       │       │       └── page.tsx   # Top-rated TV Shows page
 │          │       │       ├── airing-today/
 │          │       │       │       └── page.tsx   # Airing Today TV Shows page
-│          │       │       ├── on-tv/
+│          │       │       ├── on-the-air/
 │          │       │               └── page.tsx   # On-Tv TV Shows page
 │          │       └── search/
 │          │               ├── MoviePage.module.css  # Styles for Search Page
