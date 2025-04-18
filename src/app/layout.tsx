@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import LenisProvider from '@/components/LenisProvider/LenisProvider';
+import { poppins } from '@/providers/font';
 import '@/styles/globals.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -20,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${poppins.variable}`}>
       <body>
         <LenisProvider>
           <Navbar />
