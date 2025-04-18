@@ -69,6 +69,16 @@
 </div>
 
 
+***
+## `3. Color Palette Used 📽️`
+
+<div align="center">
+  <a href="https://colorhunt.co/palette/2121213232320d737714ffec" target="_blank" rel="noopener noreferrer">
+    <img src="https://color-pallete-mu.vercel.app/api/Color-Palette?color1=%23212121&color2=%23323232&color3=%230D7377&color4=%2314FFEC"   style="border-radius: 15px;" alt="Visit Nisal.lk" />
+  </a>
+</div>
+
+
 <hr>
 <br><br><br><br><br><br><br><br>
 
