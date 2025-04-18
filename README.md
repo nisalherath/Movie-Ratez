@@ -161,6 +161,65 @@
 ***
 
 
+# `npm` Packages RunDown 📽️
+
+
+
+## `1.Framer` 
+<img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744968557/3aQX5dnH5Yqgsn98QXKF2ZXxIE_bifl79.png" width="50" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+ 
+
+### Framer Motion Library has some great Animations and Effects that I use in every single one of my Projects.
+
+***
+***
+***
+
+## `2.Swiper` 
+<img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744968132/swiper-logo_1_ilut7l.svg" width="50" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+ 
+
+### Swiper is a very Lightweight and Easy to use Carousel Library, that allows me to add various types of image Carousels in every one of my Production-Ready Sites.
+
+***
+***
+***
+
+## `3.Lenis` 
+<img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744969024/mstile-144x144_unf3hf.png" width="50" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+ 
+
+### I get frustrated when I'm on a site and it has "no give" when I navigate that page by scrolling? So I use Lenis in every one of my projects, so the Users can have the best experience when navigating my Web Creations.
+
+***
+***
+***
+
+## `4.lucide` 
+<img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744969331/logo.light_woppck.svg" width="50" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+ 
+
+### Lightweight and Extremely Customizable Icon pack, I use for all my Web Apps. 
+
+***
+***
+***
+
+
+## `5.Prettier` 
+<img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744969490/icon_uk8ifn.png" width="50" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+ 
+
+### The Best Code formatter that I use in every single one of my Web Projects. You just write `~command` to specify the script you want formatting> instantly turns it into a Readable Format!
+
+***
+***
+***
+
+<br><br>
+***
+
+
 # How to Run This Project 📽️
 
 ### `Follow these steps to get the movie app up and running on your local machine:`
