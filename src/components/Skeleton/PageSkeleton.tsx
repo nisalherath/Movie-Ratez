@@ -5,12 +5,12 @@ import styles from './Skeleton.module.css';
 export const PageSkeleton = () => {
   return (
     <div className={styles.pageContainer}>
-      {/* Page title skeleton */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
+        {/* Page title skeleton */}
         <SkeletonPulse 
           style={{ 
             height: '2.5rem', 
@@ -30,32 +30,42 @@ export const PageSkeleton = () => {
           }} 
         />
         
-        {/* Grid skeleton */}
-        <div className={styles.gridSkeleton}>
-          {Array.from({ length: 12 }, (_, i) => (
-            <div key={i} className={styles.gridSkeletonItem}>
-              <div className={styles.cardSkeleton}>
-                <div className={styles.posterSkeleton}>
-                  <SkeletonPulse className={styles.posterPulse} />
-                </div>
-                <div className={styles.cardInfoSkeleton}>
-                  {/* Title skeleton */}
-                  <SkeletonPulse style={{ height: '1rem', width: '90%', marginBottom: '0.5rem' }} />
-                  
-                  {/* Year/type skeleton */}
-                  <div className={styles.metaSkeleton}>
-                    <SkeletonPulse style={{ height: '0.8rem', width: '40%' }} />
-                    <SkeletonPulse style={{ height: '0.8rem', width: '30%' }} />
+        {/* Grid container matching MovieGrid */}
+        <div className={styles.skeletonContainer}>
+          <div className={styles.gridSkeleton}>
+            {Array.from({ length: 12 }, (_, i) => (
+              <div key={i} className={styles.gridSkeletonItem}>
+                <div className={styles.cardSkeleton}>
+                  <div className={styles.posterSkeleton}>
+                    <SkeletonPulse className={styles.posterPulse} />
+                  </div>
+                  <div className={styles.cardInfoSkeleton}>
+                    <SkeletonPulse style={{ 
+                      height: '1rem', 
+                      width: '90%', 
+                      marginBottom: '0.5rem' 
+                    }} />
+                    <div className={styles.metaSkeleton}>
+                      <SkeletonPulse style={{ 
+                        height: '0.8rem', 
+                        width: '40%' 
+                      }} />
+                      <SkeletonPulse style={{ 
+                        height: '0.8rem', 
+                        width: '30%' 
+                      }} />
+                    </div>
+                  </div>
+                  <div className={styles.ratingBadgeSkeleton}>
+                    <SkeletonPulse style={{ 
+                      width: '100%', 
+                      height: '100%' 
+                    }} />
                   </div>
                 </div>
-                
-                {/* Rating badge skeleton */}
-                <div className={styles.ratingBadgeSkeleton}>
-                  <SkeletonPulse style={{ width: '100%', height: '100%' }} />
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
           
           {/* Pagination skeleton */}
           <div className={styles.paginationSkeleton}>

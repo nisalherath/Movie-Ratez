@@ -13,7 +13,7 @@
 
 #### `A modern movie database application built with Next.js and TypeScript, powered by TMDB API.`
 
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744914525/movieratez_i9sm1w.png" width="100" height="100" style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 
@@ -53,7 +53,7 @@
 ## `1. HomePage 📽️`
 
 <div align="center">
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744929467/moviehome_pboavt.webp"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
@@ -62,7 +62,7 @@
 ## `2. Movie/TV - Page/Grid 📽️`
 
 <div align="center">
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="https://res.cloudinary.com/dlnhogbjy/image/upload/v1744929467/moviegrid_os84xs.webp"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
@@ -85,7 +85,7 @@
 ## `1. Hero Section with Trending Movies 📽️`
 
 <div align="center">
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="./public/demo1.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
@@ -98,7 +98,7 @@
 ## `2. Movie / TV Show Grid 📽️`
 
 <div align="center">
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="./public/demo2.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
@@ -112,7 +112,7 @@
 ## `3. Search Movies / TV Shows 📽️`
 
 <div align="center">
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="./public/demo3.gif"  style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>
@@ -127,7 +127,7 @@
 ## `4. Responsive Design 📽️`
 
 <div align="center">
-  <a href="https://movieratez.nisal.lk" target="_blank" rel="noopener noreferrer">
+  <a href="https://movies.nisal.lk" target="_blank" rel="noopener noreferrer">
     <img src="./public/demo4.gif" width="250" style="border-radius: 15px;" alt="Visit Nisal.lk" />
   </a>
 </div>

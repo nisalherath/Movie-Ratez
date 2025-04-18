@@ -11,6 +11,12 @@
   position: relative;
 }
 
+.skeletonContainer {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+  max-width: 900px;
+}
 
 .gridSkeleton {
   display: grid;
