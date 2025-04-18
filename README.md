@@ -294,8 +294,12 @@ movie-ratez/
 │          │        └── tmdb.ts      # TMDB API service functions
 │          ├── types/
 │          │        └── types.ts     # TypeScript interfaces
+│          │
+│          ├── providers/
+│          │        └── font.ts      # Font Imports
+│          │
 │          └── styles/
-│                    ├── globals.css # Global CSS styles
+│                    ├── globals.css   # Global CSS styles
 │                    └── variables.css # CSS custom properties
 │
 ├──────── README.md    # Documentation
