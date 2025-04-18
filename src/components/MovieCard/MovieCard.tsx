@@ -13,17 +13,24 @@ interface MovieCardProps {
 }
 
 // Helper functions to safely get title and date
-// I ran into a problem where the Movie Type and the TV type would get mumbo Jumbod
 const getTitle = (item: MediaItem): string => {
-  return item.media_type === 'tv' ? item.name! : item.title!;
+  return item.media_type === 'tv' ? (item.name || 'Unknown Title') : (item.title || 'Unknown Title');
 };
 
 const getReleaseDate = (item: MediaItem): string => {
-  return item.media_type === 'tv' ? item.first_air_date! : item.release_date!;
+  return item.media_type === 'tv' ? (item.first_air_date || '') : (item.release_date || '');
 };
 
 const getMediaType = (item: MediaItem): 'movie' | 'tv' => {
   return item.media_type || (isMovie(item) ? 'movie' : 'tv');
+};
+
+// Safely format the rating with null check
+const formatRating = (rating: number | undefined | null): string => {
+  if (rating === undefined || rating === null) {
+    return 'N/A';
+  }
+  return rating.toFixed(1);
 };
 
 const MovieCard = ({ item }: MovieCardProps) => {
@@ -45,16 +52,18 @@ const MovieCard = ({ item }: MovieCardProps) => {
     return diffDays <= 14 && releaseDay <= today;
   };
   
-  // Rating Calc
-  const getRatingClass = (rating: number) => {
+  // Rating Calc with null safety
+  const getRatingClass = (rating: number | undefined | null) => {
+    if (rating === undefined || rating === null) return styles.ratingLow;
     if (rating >= 7) return styles.ratingHigh;
     if (rating >= 5) return styles.ratingMedium;
     return styles.ratingLow;
   };
 
   // Map genre IDs to names using our utility function
+  // Ensure genre_ids is not undefined
   const genreNames = mapGenreIdsToNames(
-    item.genre_ids, 
+    item.genre_ids || [], 
     mediaType
   );
 
@@ -79,7 +88,7 @@ const MovieCard = ({ item }: MovieCardProps) => {
             className={`${styles.rating} ${getRatingClass(item.vote_average)}`}
           >
             <Star size={10} style={{ marginRight: '2px' }} />
-            {item.vote_average.toFixed(1)}
+            {formatRating(item.vote_average)}
           </motion.div>
           
           {isNewRelease() && (

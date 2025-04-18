@@ -4,7 +4,18 @@ const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_TMDB_BASE_URL;
 const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL;
 
-// logs and debugs
+// Helper function to validate response data
+const validateMediaItem = (item: any): any => {
+  return {
+    ...item,
+    vote_average: item.vote_average ?? 0,
+    genre_ids: item.genre_ids || [],
+    poster_path: item.poster_path || null,
+    backdrop_path: item.backdrop_path || null
+  };
+};
+
+// Fetch from TMDB with improved error handling
 const fetchFromTMDB = async (endpoint: string, page: number = 1) => {
   try {
     const url = `${BASE_URL}${endpoint}?api_key=${API_KEY}&page=${page}&language=en-US`;
@@ -16,7 +27,14 @@ const fetchFromTMDB = async (endpoint: string, page: number = 1) => {
       throw new Error(`TMDB API error: ${res.status} ${res.statusText}`);
     }
     
-    return res.json();
+    const data = await res.json();
+    
+    // Validate results to prevent undefined values
+    if (data && data.results) {
+      data.results = data.results.map(validateMediaItem);
+    }
+    
+    return data;
   } catch (error) {
     console.error(`Error fetching from TMDB:`, error);
     throw error;
@@ -28,7 +46,7 @@ export const getImageUrl = (path: string | null, size: string = 'w500'): string 
   return `${IMAGE_BASE_URL}/${size}${path}`;
 };
 
-// Movie endpoints used 
+// Movie endpoints
 export const fetchTrendingMovies = async (page: number = 1) => {
   return fetchFromTMDB('/trending/movie/week', page);
 };
@@ -63,7 +81,7 @@ export const fetchTopRatedTVShows = async (page: number = 1) => {
 };
 
 export const fetchOnTheAirTVShows = async (page: number = 1) => {
-  // Make sure this endpoint is correct - some APIs use 'on_air' instead
+  // Fixed endpoint to match API
   return fetchFromTMDB('/tv/on_the_air', page);
 };
 
@@ -71,9 +89,19 @@ export const fetchAiringTodayTVShows = async (page: number = 1) => {
   return fetchFromTMDB('/tv/airing_today', page);
 };
 
-// Search
+// Search with improved error handling
 export const searchMedia = async (query: string, page: number = 1) => {
   try {
+    if (!query.trim()) {
+      // Return empty results if query is empty
+      return {
+        page: 1,
+        results: [],
+        total_pages: 0,
+        total_results: 0
+      };
+    }
+    
     const url = `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${page}&language=en-US`;
     const res = await fetch(url);
     
@@ -81,7 +109,14 @@ export const searchMedia = async (query: string, page: number = 1) => {
       throw new Error(`TMDB API error: ${res.status} ${res.statusText}`);
     }
     
-    return res.json();
+    const data = await res.json();
+    
+    // Validate results to prevent undefined values
+    if (data && data.results) {
+      data.results = data.results.map(validateMediaItem);
+    }
+    
+    return data;
   } catch (error) {
     console.error('Error searching media:', error);
     throw error;
@@ -97,14 +132,15 @@ export const fetchMediaDetails = async (id: number, mediaType: 'movie' | 'tv') =
       throw new Error(`TMDB API error: ${res.status} ${res.statusText}`);
     }
     
-    return res.json();
+    const data = await res.json();
+    return validateMediaItem(data);
   } catch (error) {
     console.error(`Error fetching ${mediaType} details:`, error);
     throw error;
   }
 };
 
-// Updated type guards to use the correct types from types.ts
+// Type guards
 export const isMovie = (media: Movie | TvShow | MediaItem): media is Movie => {
   return media && typeof (media as Movie).title !== 'undefined';
 };

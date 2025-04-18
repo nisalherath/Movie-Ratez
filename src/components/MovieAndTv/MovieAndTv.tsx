@@ -27,14 +27,26 @@ function MovieTVContent({ title, fetchFunction, entityType, searchMode = false }
 
   useEffect(() => {
     const fetchData = async () => {
+      // Skip fetch if in search mode with empty query
+      if (searchMode && !queryParam?.trim()) {
+        setData({
+          page: 1,
+          results: [],
+          total_pages: 0,
+          total_results: 0
+        });
+        setLoading(false);
+        return;
+      }
+      
       setLoading(true);
       setError(null);
       
       try {
-        const [responseData] = await Promise.all([
-          fetchFunction(currentPage, queryParam),
-          new Promise(resolve => setTimeout(resolve, 1500))
-        ]);
+        const responseData = await fetchFunction(currentPage, queryParam);
+        
+        // Add a small delay to prevent flash of loading state
+        await new Promise(resolve => setTimeout(resolve, 800));
         
         setData(responseData);
       } catch (error) {
@@ -60,27 +72,41 @@ function MovieTVContent({ title, fetchFunction, entityType, searchMode = false }
   };
 
   if (loading) return <PageSkeleton />;
+  
   if (error) return (
     <div className={styles.errorContainer}>
       <AlertTriangle size={32} />
       <p className={styles.errorMessage}>{error}</p>
       <button 
         className={styles.retryButton}
-        onClick={() => fetchFunction(currentPage, queryParam).then(setData).catch(() => setError(error))}
+        onClick={() => {
+          setLoading(true);
+          fetchFunction(currentPage, queryParam)
+            .then(data => {
+              setData(data);
+              setLoading(false);
+              setError(null);
+            })
+            .catch(() => {
+              setLoading(false);
+              setError(error);
+            });
+        }}
       >
         Retry
       </button>
     </div>
   );
 
-  if (!data || data.results.length === 0) {
+  // Safe check for empty results
+  if (!data || !data.results || data.results.length === 0) {
     return (
       <div className={styles.noResultsContainer}>
         <h1 className={styles.pageTitle}>
-          {searchMode ? `Results for "${queryParam}"` : title}
+          {searchMode && queryParam ? `Results for "${queryParam}"` : title}
         </h1>
         <p>{searchMode ? 'No results found' : 'No data available'}</p>
-        {searchMode && (
+        {searchMode && queryParam && (
           <p className={styles.searchTips}>
             Try checking your spelling or using different keywords
           </p>
@@ -93,16 +119,16 @@ function MovieTVContent({ title, fetchFunction, entityType, searchMode = false }
     <div className={styles.pageContainer}>
       <div className={styles.contentWrapper}>
         <h1 className={styles.pageTitle}>
-          {searchMode ? `Results for "${queryParam}"` : title}
+          {searchMode && queryParam ? `Results for "${queryParam}"` : title}
         </h1>
         <p className={styles.resultCount}>
           {searchMode 
-            ? `Found ${data.total_results} results`
-            : `Showing ${data.results.length} of ${data.total_results} ${entityType}`}
+            ? `Found ${data.total_results || 0} results`
+            : `Showing ${data.results.length || 0} of ${data.total_results || 0} ${entityType}`}
         </p>
         <MovieGrid
           items={data.results}
-          totalPages={data.total_pages}
+          totalPages={data.total_pages || 1}
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />
