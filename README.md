@@ -39,6 +39,7 @@
 ### - [🍿 User Interface](#%EF%B8%8F-user-interface-%EF%B8%8F)
 ### - [🍿 Dependencies](#dependencies-%EF%B8%8F)
 ### - [🍿 Rundown of the Libraries Used](#npm-packages-rundown-%EF%B8%8F)
+### - [🍿 Special CSS](#npm-packages-rundown-%EF%B8%8F)
 ### - [🍿 How To Run](#how-to-run-this-project-%EF%B8%8F)
 ### - [🍿 File Structure](#file-structure-%EF%B8%8F)
 ### - [🍿 License](#license-)
@@ -230,6 +231,22 @@
 <br><br>
 ***
 
+
+# CSS Tricks 📽️
+
+
+
+## `1.CSS Ribbon` 
+<img src="https://ribbon-languages.vercel.app/api/ribbon" width="250" height="90" style="border-radius: 15px;" alt="Visit Nisal.lk" />
+ 
+
+### A CSS Ribbon design was use to show a `New` Tag on every new Movie/TV Show.
+`- Here's the site that provides them.` ( [`Get it here`](https://css-generators.com/ribbon-shapes/) )
+***
+***
+***
+
+<br><br>
 
 # How to Run This Project 📽️
 

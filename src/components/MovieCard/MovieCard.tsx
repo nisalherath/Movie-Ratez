@@ -12,20 +12,26 @@ interface MovieCardProps {
   item: MediaItem;
 }
 
-// Helper functions to safely get title and date
+// get title and date
 const getTitle = (item: MediaItem): string => {
-  return item.media_type === 'tv' ? (item.name || 'Unknown Title') : (item.title || 'Unknown Title');
+  if (item.name) return item.name;
+  return item.title || 'Unknown Title';
 };
 
+//get releae date
 const getReleaseDate = (item: MediaItem): string => {
-  return item.media_type === 'tv' ? (item.first_air_date || '') : (item.release_date || '');
+  return item.media_type === 'tv' || (!item.media_type && item.first_air_date) 
+    ? (item.first_air_date || '') 
+    : (item.release_date || '');
 };
 
+//get type of media
 const getMediaType = (item: MediaItem): 'movie' | 'tv' => {
-  return item.media_type || (isMovie(item) ? 'movie' : 'tv');
+  if (item.media_type) return item.media_type;
+  return isMovie(item) ? 'movie' : 'tv';
 };
 
-// Safely format the rating with null check
+// format the rating and returning it
 const formatRating = (rating: number | undefined | null): string => {
   if (rating === undefined || rating === null) {
     return 'N/A';
@@ -61,7 +67,8 @@ const MovieCard = ({ item }: MovieCardProps) => {
   };
 
   // Map genre IDs to names using our utility function
-  // Ensure genre_ids is not undefined
+  // we need to make sure genre_ids is neva null or returns a string of numbers(sometimes the number value returns, thats why)
+  // in genre service
   const genreNames = mapGenreIdsToNames(
     item.genre_ids || [], 
     mediaType
